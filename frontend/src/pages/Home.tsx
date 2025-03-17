@@ -252,7 +252,7 @@ const Home: React.FC = () => {
       transition={{ duration: 0.8 }}
     >
       <Header>
-        <Title>WeatherNow</Title>
+        <Title>ass-mit</Title>
         <p>Real-time weather updates at your fingertips</p>
       </Header>
 
