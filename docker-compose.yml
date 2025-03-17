@@ -1,0 +1,15 @@
+version: "3"
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5001:5000"
+    environment:
+      - WEATHER_API_KEY=1a4653420c704fde931182132251603
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
