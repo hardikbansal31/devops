@@ -1,0 +1,34 @@
+- hosts: localhost
+  become: yes
+  tasks:
+    - name: Start Docker Desktop (Ensure it's Running)
+      command: open -a Docker
+
+    - name: Pull Backend Image
+      command: docker pull 31hardik/weatherapp-backend:latest
+
+    - name: Pull Frontend Image
+      command: docker pull 31hardik/weatherapp-frontend:latest
+
+    - name: Create Docker Compose file
+      copy:
+        dest: /Users/hardik/docker-compose.yml
+        content: |
+          version: "3"
+          services:
+            backend:
+              image: 31hardik/weatherapp-backend:latest
+              ports:
+                - "5001:5000"
+            frontend:
+              image: 31hardik/weatherapp-frontend:latest
+              platform: linux/amd64
+              ports:
+                - "3001:3000"
+              depends_on:
+                - backend
+
+    - name: Start Containers
+      command: docker-compose up -d
+      args:
+        chdir: /Users/hardik/
