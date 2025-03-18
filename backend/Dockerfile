@@ -1,18 +1,21 @@
-# Use official Node.js image as base
-FROM node:16
+# Use Node.js as the base image
+FROM node:18
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
 # Copy package.json and install dependencies
-COPY package.json .
+COPY package.json package-lock.json ./
 RUN npm install
 
-# Copy the rest of the application files
+# Copy the entire backend folder
 COPY . .
 
-# Expose the port the backend runs on
-EXPOSE 5000
+# Compile TypeScript to JavaScript
+RUN npm run build  # Ensure your package.json has "build": "tsc"
 
-# Start the backend server
-CMD ["node", "server.js"]
+# Expose the correct port (5001 as per your change)
+EXPOSE 5001
+
+# Start the server (use the compiled JavaScript file)
+CMD ["node", "dist/server.js"]
